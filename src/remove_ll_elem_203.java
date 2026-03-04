@@ -1,0 +1,20 @@
+public class remove_ll_elem_203 {
+    public class ListNode {
+        int val;
+        ListNode next;
+        ListNode() {}
+        ListNode(int val) { this.val = val; }
+        ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+    }
+
+    public ListNode removeElements(ListNode head, int val) {
+        if (head == null) {
+            return head;
+        }
+        head.next = removeElements(head.next, val);
+        if (head.val == val) {
+            return head.next;
+        }
+        return head;
+    }
+}
