@@ -40,5 +40,46 @@ public class palindrome_partitioning_131 {
     }
 
     // TODO: Use DP to solve
+    public List<List<String>> partition_dp(String s) {
+        List<List<String>> res = new ArrayList<>();
+        List<String> temp = new ArrayList<>();
+        int len = s.length();
 
+        // 判断 s[i..j]
+        boolean[][] dp = new boolean[len][len];
+
+        // dp[i][j] depends on dp[i+1][j-1]
+        for (int i = len - 1; i >= 0; i--) {
+            for (int j = i; j < len; j++) {
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (j - i < 2) {
+                        dp[i][j] = true;
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1];
+                    }
+                }
+            }
+        }
+
+        Helper(s, 0, dp, temp, res);
+        return res;
+    }
+
+    private void Helper(String s, int start, boolean[][] dp,
+                        List<String> temp, List<List<String>> res) {
+        // base case
+        if (start == s.length()) {
+            res.add(new ArrayList<>(temp));
+            return;
+        }
+
+        // backtracking
+        for (int end = start; end < s.length(); end++) {
+            if (!dp[start][end]) continue;
+
+            temp.add(s.substring(start, end + 1));
+            Helper(s, end + 1, dp, temp, res);
+            temp.removeLast();
+        }
+    }
 }
