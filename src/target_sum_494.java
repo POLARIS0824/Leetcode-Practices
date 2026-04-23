@@ -36,4 +36,32 @@ public class target_sum_494 {
 
         return dp[nums.length - 1][aim];
     }
+
+    // 一维数组 dp
+    public int mySolution(int[] nums, int target) {
+        // positive: p
+        // negative: s - p
+        // p - (s - p) = target
+        // p = (s + target) / 2
+        int sum = 0;
+        for (int num : nums) {
+            sum += num;
+        }
+
+        if ((sum + target) % 2 != 0 || Math.abs(target) > sum) {
+            return 0;
+        }
+
+        int aim = (sum + target) / 2;
+        int[] dp = new int[aim + 1];
+        dp[0] = 1;
+
+        for (int num : nums) { // 遍历物品
+            for (int j = aim; j >= num; j--) { // 遍历容量
+                dp[j] += dp[j - num];
+            }
+        }
+
+        return dp[aim];
+    }
 }
