@@ -1,3 +1,5 @@
+// ⚠️ 可以不连续
+
 public class longest_palindromic_subsequence_516 {
     public int longestPalindromeSubseq(String s) {
         int n = s.length();
